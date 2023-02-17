@@ -72,7 +72,14 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li>
+      <a href="#acknowledgments">Acknowledgments</a>
+      <ul>
+        <li><a href="#people">People</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="#technologies-used">Technologies used</a></li>
+      </ul>
+    </li>
   </ol>
 </details>
 
@@ -234,6 +241,14 @@ Project Link: [https://github.com/Madahin/BobTheChessEngine](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
+### People
+* [Sebastian Lague](https://github.com/SebLague) for his incredible [coding adventure video](https://www.youtube.com/watch?v=U4ogK0MIzqk)
+
+### Documentation
+* [Chess Programming Wiki](https://www.chessprogramming.org)
+* [shredderchess.com](https://www.shredderchess.com/) for the UCI specification
+
+### Technologies used
 * [cmake](https://cmake.org/)
 * [google test](https://github.com/google/googletest)
 * [spdlog](https://github.com/gabime/spdlog)
