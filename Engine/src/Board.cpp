@@ -21,6 +21,7 @@ auto Board::LoadFenString(std::string_view strFenString) -> bool
     uint8_t bFenStringIndex{0}, bCurrentX{0}, bCurrentY{0};
 
     m_pieces.clear();
+    m_boardData.fill(Piece::None);
 
     // We save each pieces location into a map
     while (strFenString[bFenStringIndex] != ' ')
@@ -46,6 +47,11 @@ auto Board::LoadFenString(std::string_view strFenString) -> bool
         }
 
         bFenStringIndex += 1;
+    }
+
+    for (const auto piece : m_pieces)
+    {
+        m_boardData[Piece::GetCoordinate(piece)] = piece;
     }
 
     // Skip the ' '
@@ -114,15 +120,7 @@ auto Board::GenerateFenString() const -> std::string
         for (uint8_t x=0; x < BOARD_SIZE; ++x)
         {
             const uint8_t bCaseIndex = BoardIndexFromCoordinate(x, y);
-            Piece_t bCurrentPiece = Piece::None;
-            for (const auto& p : m_pieces)
-            {
-                if (Piece::GetCoordinate(p) == bCaseIndex)
-                {
-                    bCurrentPiece = p;
-                    break;
-                }
-            }
+            Piece_t bCurrentPiece = m_boardData[bCaseIndex];
             if (bCurrentPiece == Piece::None)
             {
                 emptyCases += 1;
@@ -255,15 +253,7 @@ auto Board::PrintBoard(bool buffered) const -> void
         for (uint8_t x=0; x < BOARD_SIZE; ++x)
         {
             const uint8_t bCaseIndex = BoardIndexFromCoordinate(x, y);
-            Piece_t bCurrentPiece = Piece::None;
-            for (const auto& p : m_pieces)
-            {
-                if (Piece::GetCoordinate(p) == bCaseIndex)
-                {
-                    bCurrentPiece = p;
-                    break;
-                }
-            }
+            Piece_t bCurrentPiece = m_boardData[bCaseIndex];
 
             ss << (((x+y) % 2) ? BACKGROUND_DARK : BACKGROUND_LIGHT)
                       << (Piece::CompareColor(bCurrentPiece, Piece::White) ? PIECE_LIGHT : PIECE_DARK)

@@ -5,6 +5,8 @@
 #ifndef CHESSENGINE_BOARD_H
 #define CHESSENGINE_BOARD_H
 
+#include <array>
+#include <cassert>
 #include <cstdint>
 #include <map>
 #include <string>
@@ -30,6 +32,38 @@ public:
 
     auto LoadFenString(std::string_view strFenString) -> bool;
 
+    /**
+     * @Brief Retrieve the list of piece on the current board
+     * @return A vector of piece
+     */
+    [[nodiscard]]
+    inline auto GetPieces() const -> const std::vector<Piece_t>&
+    {
+        return m_pieces;
+    }
+
+    /**
+     * @Brief Retrieve the content of a square at a given coordinate
+     * @param coordinate
+     * @return A chess Piece or an empty Piece
+     */
+    [[nodiscard]]
+    inline auto GetSquareContent(const uint8_t coordinate) const -> Piece_t
+    {
+        assert((coordinate > 0) && (coordinate < (NUM_CASE)));
+        return m_boardData[coordinate];
+    }
+
+    [[nodiscard]]
+    inline constexpr auto GetColorToMove() const -> Piece_t
+    {
+        return ((m_whiteToPlay) ? Piece::White : Piece::Black);
+    }
+
+    /**
+     * @Brief Generate a FEN string from the current board
+     * @return The FEN string
+     */
     [[nodiscard]]
     auto GenerateFenString() const -> std::string;
 
@@ -84,9 +118,12 @@ private:
     [[nodiscard]]
     static auto ValidateFENString(std::string_view strFenString) -> bool;
 
-private:
+public:
     static constexpr uint8_t BOARD_SIZE = 8;
+    static constexpr uint8_t NUM_CASE   = BOARD_SIZE * BOARD_SIZE;
 
+private:
+    std::array<Piece_t, NUM_CASE> m_boardData;
     std::vector<Piece_t> m_pieces;
     bool m_whiteToPlay;
     RockPossibility m_whiteRockPossibility, m_blackRockPossibility;
