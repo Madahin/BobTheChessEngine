@@ -228,8 +228,9 @@ auto Board::ValidateFENString(std::string_view strFenString) -> bool
     return bLineNumber == BOARD_SIZE;
 }
 
-auto Board::PrintBoard() const -> void
+auto Board::PrintBoard(bool buffered) const -> void
 {
+    // Color from https://github.com/nickzuber/chs
     static constexpr std::string_view RESET  = "\x1b[49;0m";
     static constexpr std::string_view PIECE_DARK  = "\x1b[38;5;232;1m";
     static constexpr std::string_view PIECE_LIGHT  = "\x1b[38;5;231;1m";
@@ -246,9 +247,11 @@ auto Board::PrintBoard() const -> void
             {Piece::None  , "  "},
 
     };
+
+    std::stringstream ss;
     for (uint8_t y=0; y < BOARD_SIZE; ++y)
     {
-        std::cout << GREY << BOARD_SIZE - y << ' ';
+        ss << GREY << BOARD_SIZE - y << ' ';
         for (uint8_t x=0; x < BOARD_SIZE; ++x)
         {
             const uint8_t bCaseIndex = BoardIndexFromCoordinate(x, y);
@@ -262,12 +265,21 @@ auto Board::PrintBoard() const -> void
                 }
             }
 
-            std::cout << (((x+y) % 2) ? BACKGROUND_DARK : BACKGROUND_LIGHT)
+            ss << (((x+y) % 2) ? BACKGROUND_DARK : BACKGROUND_LIGHT)
                       << (Piece::CompareColor(bCurrentPiece, Piece::White) ? PIECE_LIGHT : PIECE_DARK)
                       << s_piece_ascii.at(Piece::GetKind(bCurrentPiece))
                       << RESET;
         }
-        std::cout << std::endl;
+        ss << std::endl;
     }
-    std::cout << GREY << "  a b c d e f g h" << RESET << std::endl;
+    ss << GREY << "  a b c d e f g h" << RESET << std::endl;
+
+    if (buffered)
+    {
+        std::cout << ss.str();
+    }
+    else
+    {
+        std::cerr << ss.str();
+    }
 }

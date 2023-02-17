@@ -33,7 +33,11 @@ public:
     [[nodiscard]]
     auto GenerateFenString() const -> std::string;
 
-    auto PrintBoard() const -> void;
+    /**
+     * @brief Print the current chessboard to stdout or stderr
+     * @param[in] buffered If true, print to stdout, else print to stderr
+     */
+    auto PrintBoard(bool buffered=true) const -> void;
 
     /**
      * @brief Compute a board index from xy coordinate
