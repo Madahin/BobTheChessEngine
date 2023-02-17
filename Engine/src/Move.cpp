@@ -263,16 +263,16 @@ auto Move::GenerateKingMoves(const Board &board, const Piece_t piece, const uint
 constexpr auto Move::GenerateMoveData() -> std::array<std::array<uint8_t, 8>, Board::NUM_CASE>
 {
     // Macro wizardry for generating an array as a constexpr
-#define ComputeForXY(x, y)\
-{                         \
-     y,                   \
-     7 - y,               \
-     x,                   \
-     7 - x,               \
-     MIN(y, x),           \
-     MIN(7 - x, 7 - x),   \
-     MIN(y, 7 - x),       \
-     MIN(7 - y, x)        \
+#define ComputeForXY(x, y)   \
+{                            \
+     y,                      \
+     7 - y,                  \
+     x,                      \
+     7 - x,                  \
+     std::min(y, x),         \
+     std::min(7 - x, 7 - x), \
+     std::min(y, 7 - x),     \
+     std::min(7 - y, x)      \
  }
 #define ComputeForY(y)  \
     ComputeForXY(0, y),  \

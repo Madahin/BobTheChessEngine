@@ -5,6 +5,7 @@
 #ifndef CHESSENGINE_MOVE_H
 #define CHESSENGINE_MOVE_H
 
+#include <algorithm>
 #include <array>
 #include <memory>
 #include <stack>
@@ -14,7 +15,6 @@
 #include "Logger.h"
 #include "MoveStruct.h"
 #include "Piece.h"
-#include "Utils.h"
 
 class Board;
 
