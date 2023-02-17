@@ -230,12 +230,12 @@ auto Board::ValidateFENString(std::string_view strFenString) -> bool
 
 auto Board::PrintBoard() const -> void
 {
-    static constexpr std::string RESET  = "\x1b[49;0m";
-    static constexpr std::string PIECE_DARK  = "\x1b[38;5;232;1m";
-    static constexpr std::string PIECE_LIGHT  = "\x1b[38;5;231;1m";
-    static constexpr std::string BACKGROUND_DARK  = "\x1b[48;5;172;1m";
-    static constexpr std::string BACKGROUND_LIGHT  = "\x1b[48;5;215;1m";
-    static constexpr std::string GREY  = "\x1b[38;5;242m";
+    static constexpr std::string_view RESET  = "\x1b[49;0m";
+    static constexpr std::string_view PIECE_DARK  = "\x1b[38;5;232;1m";
+    static constexpr std::string_view PIECE_LIGHT  = "\x1b[38;5;231;1m";
+    static constexpr std::string_view BACKGROUND_DARK  = "\x1b[48;5;172;1m";
+    static constexpr std::string_view BACKGROUND_LIGHT  = "\x1b[48;5;215;1m";
+    static constexpr std::string_view GREY  = "\x1b[38;5;242m";
     static const std::map<Piece_t, std::string> s_piece_ascii = {
             {Piece::King  , "♚ "},
             {Piece::Queen , "♛ "},

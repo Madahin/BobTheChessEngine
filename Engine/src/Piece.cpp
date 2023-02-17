@@ -18,7 +18,7 @@ auto Piece::FromFenToInt(const char bFENChar) -> Piece_t
 {
     const char bLowerFenChar = static_cast<char>(std::tolower(bFENChar));
 
-    if (!m_MapFenToInt.contains(bLowerFenChar))
+    if (m_MapFenToInt.find(bLowerFenChar) == m_MapFenToInt.end())
     {
         return Piece::None;
     }
