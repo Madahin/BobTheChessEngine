@@ -29,7 +29,8 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<!--<div align="center">
+<div align="center">
+<!--
   <a href="https://github.com/Madahin/BobTheChessEngine">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
@@ -53,15 +54,12 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#compilation">Compilation</a></li>
       </ul>
     </li>
     <li>
@@ -165,7 +163,30 @@ You can launch the unit tests with
 
 - [ ] Finishing the readme
     - [ ] Writing the USAGE section
-    - [ ] Finishing the roadmap
+    - [x] Finishing the roadmap
+- [ ] UCI Interface
+    - [ ] Gui -> Engine
+        - [x] ucinewgame
+        - [x] uci
+        - [x] quit
+        - [x] debug
+        - [x] option
+        - [x] isready
+        - [ ] setoption name <id> [value <x>]
+        - [ ] position [fen <fenstring> | startpos ] moves <move1> .... <movei>
+        - [ ] go
+        - [ ] stop
+        - [ ] ponderhit
+    - [ ] Engine -> GUI
+        - [x] id
+        - [x] uciok
+        - [x] readyok
+        - [ ] bestmove <move1> [ ponder <move2> ]
+        - [ ] info
+        - [ ] option
+- [ ] Passing the generation move test suite
+- [ ] Playing random legal move
+- [ ] Improving AI
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
