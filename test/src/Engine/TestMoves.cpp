@@ -26,7 +26,7 @@ TEST(TestMove, Perft_Position_1)
             2439530234167
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -46,7 +46,7 @@ TEST(TestMove, Perft_Position_2)
             8031647685
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -68,7 +68,7 @@ TEST(TestMove, Perft_Position_3)
             3009794393
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -88,7 +88,7 @@ TEST(TestMove, Perft_Position_4)
             706045033
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -108,7 +108,7 @@ TEST(TestMove, Perft_Position_4_mirrored)
             706045033
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -127,7 +127,7 @@ TEST(TestMove, Perft_Position_5)
             89941194
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
@@ -150,7 +150,7 @@ TEST(TestMove, Perft_Position_6)
             490154852788714
     };
 
-    for (auto depth = 0; depth < perftResult.size(); ++depth)
+    for (uint32_t depth = 0; depth < perftResult.size(); ++depth)
     {
         ASSERT_EQ(perftResult[depth], Move::GenerateMoveFromBoardForDepth(board, depth+1)->size());
     }
