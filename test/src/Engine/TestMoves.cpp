@@ -32,6 +32,7 @@ TEST(TestMove, Perft_Position_1)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_2
 TEST(TestMove, Perft_Position_2)
 {
     Board board;
@@ -52,6 +53,7 @@ TEST(TestMove, Perft_Position_2)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_3
 TEST(TestMove, Perft_Position_3)
 {
     Board board;
@@ -74,6 +76,7 @@ TEST(TestMove, Perft_Position_3)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_4
 TEST(TestMove, Perft_Position_4)
 {
     Board board;
@@ -94,6 +97,7 @@ TEST(TestMove, Perft_Position_4)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_4
 TEST(TestMove, Perft_Position_4_mirrored)
 {
     Board board;
@@ -114,6 +118,7 @@ TEST(TestMove, Perft_Position_4_mirrored)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_5
 TEST(TestMove, Perft_Position_5)
 {
     Board board;
@@ -133,6 +138,7 @@ TEST(TestMove, Perft_Position_5)
     }
 }
 
+// https://www.chessprogramming.org/Perft_Results#Position_6
 TEST(TestMove, Perft_Position_6)
 {
     Board board;
