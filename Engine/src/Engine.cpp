@@ -31,12 +31,13 @@ Engine::Engine(std::istream& inputStream, std::ostream& outputStream) :
 
 void Engine::Start()
 {
+    Log::Info("------------ Engine Start ------------");
     while(!m_bMustQuit)
     {
         std::string strInput;
         getline(m_inputStream, strInput);
 
-        Log::Info("Command: {}", strInput);
+        Log::Info("GUI -> Engine: {}", strInput);
 
         for(const stCommands& command : m_vecKnownCommand)
         {
@@ -78,10 +79,10 @@ std::vector<std::string> Engine::ParseArgs(const std::string &strArgs)
 
 void Engine::CmdUCI(const std::string &strCmd)
 {
-    m_outputStream << "id name ChessEngine" << std::endl;
-    m_outputStream << "id author Madahin"   << std::endl;
-    m_outputStream << "icuok"               << std::endl;
-    m_outputStream << "readyok"             << std::endl;
+    SendCommand("id name BobTheChessEngine");
+    SendCommand("id author Madahin"  );
+    SendCommand("icuok"              );
+    SendCommand("readyok"            );
 }
 
 void Engine::CmdQuit(const std::string&)
@@ -104,12 +105,12 @@ void Engine::CmdDebug(const std::string &strCmd)
         }
         else
         {
-            Debug("debug [on|off]: Invalid argument");
+            Log::Warn("debug [on|off]: Invalid argument\n");
         }
     }
     else
     {
-        Debug("debug [on|off]: No argument given");
+        Log::Warn("debug [on|off]: No argument given\n");
     }
 }
 
@@ -120,7 +121,7 @@ void Engine::CmdOption(const std::string &strCmd)
 
 void Engine::CmdIsReady(const std::string &strCmd)
 {
-    m_outputStream << "readyok" << std::endl;
+    SendCommand("readyok");
 }
 
 void Engine::CmdICUNewGame(const std::string&)
@@ -128,11 +129,17 @@ void Engine::CmdICUNewGame(const std::string&)
     m_board.LoadFenString("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 }
 
+auto Engine::SendCommand(std::string_view command) const -> void
+{
+    Log::Info("Engine -> GUI: {}", command);
+    m_outputStream << command << std::endl;
+}
+
 void Engine::Debug(const std::string &strDebugString) const
 {
     if (m_bDebug)
     {
-        m_outputStream << "info string " << strDebugString << std::endl;
+        SendCommand(fmt::format("info string {}", strDebugString));
     }
 }
 

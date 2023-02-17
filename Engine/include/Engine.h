@@ -56,6 +56,8 @@ private:
     void CmdICUNewGame(const std::string &strCmd);
 
     void Debug(const std::string &strDebugString) const;
+
+    auto SendCommand(std::string_view command) const -> void;
 };
 
 
