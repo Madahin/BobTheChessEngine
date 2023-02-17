@@ -50,11 +50,6 @@ void Engine::Start()
     }
 }
 
-std::string Engine::GetFenStringFromBoard() const
-{
-    return m_board.GenerateFenString();
-}
-
 std::vector<std::string> Engine::ParseArgs(const std::string &strArgs)
 {
     std::vector<std::string> vecArgs;

@@ -42,9 +42,6 @@ public:
     Engine(std::istream& inputStream, std::ostream& outputStream);
     void Start();
 
-    void SetBoardFromFenString(const std::string& strFenString);
-    [[nodiscard]] std::string GetFenStringFromBoard() const;
-
 private:
     std::vector<std::string> ParseArgs(const std::string& strArgs);
 
