@@ -11,6 +11,11 @@ Board::Board(const std::string_view strFenString)
     LoadFenString(strFenString);
 }
 
+auto Board::ApplyMove(const Move_t &move) -> void
+{
+    m_whiteToPlay = !m_whiteToPlay;
+}
+
 auto Board::LoadFenString(std::string_view strFenString) -> bool
 {
     if (!ValidateFENString(strFenString))

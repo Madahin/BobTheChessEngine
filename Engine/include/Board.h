@@ -15,6 +15,7 @@
 #include <tuple>
 #include <vector>
 
+#include "MoveStruct.h"
 #include "Piece.h"
 
 class Board
@@ -29,6 +30,8 @@ class Board
 
 public:
     explicit Board(std::string_view strFenString="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+    auto ApplyMove(const Move_t& move) -> void;
 
     auto LoadFenString(std::string_view strFenString) -> bool;
 

@@ -90,6 +90,20 @@ public:
         return piece & Piece::COLOR;
     }
 
+    [[nodiscard]]
+    static inline auto IsSliding(Piece_t piece) -> Piece_t
+    {
+        const Piece_t kind = GetKind(piece);
+        bool isSliding = false;
+        if ((kind == Piece::Bishop) ||
+            (kind == Piece::Rook)   ||
+            (kind == Piece::King))
+        {
+            isSliding = true;
+        }
+        return isSliding;
+    }
+
     /**
      * @brief Compare the kind of two chess piece
      * @param piece1 An internal representation of a chess piece
