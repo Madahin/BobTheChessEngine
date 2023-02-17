@@ -87,13 +87,13 @@ namespace Log
     template <typename... Args>
     auto Error(spdlog::format_string_t<Args...> format, Args &&... args) -> void
     {
-        ::Logger::getInstance()->critical(format, std::forward<Args>(args)...);
+        ::Logger::getInstance()->error(format, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
     auto Critical(spdlog::format_string_t<Args...> format, Args &&... args) -> void
     {
-        ::Logger::getInstance()->debug(format, std::forward<Args>(args)...);
+        ::Logger::getInstance()->critical(format, std::forward<Args>(args)...);
     }
 };
 
