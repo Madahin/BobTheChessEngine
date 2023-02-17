@@ -142,7 +142,7 @@ On archlinux, the package is mingw-w64 :
 You can choose different toolchains depending on your needs :
 * Linux x86 : Toolchain-gcc-m32.cmake
 * Linux x64 : Toolchain-gcc-m64.cmake
-* Windows x86 : Toolchain-mingw64-m64.cmake
+* Windows x86 : Toolchain-mingw64-m32.cmake
 * Windows x64 : Toolchain-mingw64-m64.cmake
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
