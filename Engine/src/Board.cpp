@@ -119,7 +119,7 @@ auto Board::GenerateFenString() const -> std::string
 {
     std::stringstream ss;
 
-    for (uint8_t y=0; y < BOARD_SIZE; ++y)
+    for (int8_t y=BOARD_SIZE-1; y >= 0; --y)
     {
         uint16_t emptyCases = 0;
         for (uint8_t x=0; x < BOARD_SIZE; ++x)
@@ -144,7 +144,7 @@ auto Board::GenerateFenString() const -> std::string
         {
             ss << emptyCases;
         }
-        if (y < (BOARD_SIZE-1))
+        if (y > 0)
         {
             ss << '/';
         }
