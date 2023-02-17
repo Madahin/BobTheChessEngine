@@ -50,7 +50,7 @@ public:
     [[nodiscard]]
     inline auto GetSquareContent(const uint8_t coordinate) const -> Piece_t
     {
-        assert((coordinate > 0) && (coordinate < (NUM_CASE)));
+        assert((coordinate >= 0) && (coordinate < (NUM_CASE)));
         return m_boardData[coordinate];
     }
 
@@ -82,7 +82,7 @@ public:
      */
     static inline constexpr auto BoardIndexFromCoordinate(const uint8_t x, const uint8_t y) -> uint8_t
     {
-        return y + BOARD_SIZE * x;
+        return x + BOARD_SIZE * y;
     }
 
     /**
@@ -94,15 +94,15 @@ public:
      */
     static inline constexpr auto CoordinateFromBoardIndex(const uint8_t boardIndex, uint8_t& x, uint8_t& y) -> void
     {
-        y = boardIndex % BOARD_SIZE;
-        x = boardIndex / BOARD_SIZE;
+        y = boardIndex / BOARD_SIZE;
+        x = boardIndex % BOARD_SIZE;
     }
 
     static inline auto CoordinateToChessNotation(const uint8_t x, const uint8_t y) -> std::string
     {
         std::stringstream ss;
 
-        ss << static_cast<char>('a' + x) << static_cast<char>('0' + y);
+        ss << static_cast<char>('a' + x) << static_cast<char>('1' + y);
 
         return ss.str();
     }

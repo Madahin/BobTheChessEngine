@@ -18,7 +18,7 @@ auto Board::LoadFenString(std::string_view strFenString) -> bool
         return false;
     }
 
-    uint8_t bFenStringIndex{0}, bCurrentX{0}, bCurrentY{0};
+    uint8_t bFenStringIndex{0}, bCurrentX{0}, bCurrentY{BOARD_SIZE-1};
 
     m_pieces.clear();
     m_boardData.fill(Piece::None);
@@ -42,7 +42,7 @@ auto Board::LoadFenString(std::string_view strFenString) -> bool
 
         if (bCurrent == '/')
         {
-            bCurrentY += 1;
+            bCurrentY -= 1;
             bCurrentX = 0;
         }
 
@@ -247,15 +247,15 @@ auto Board::PrintBoard(bool buffered) const -> void
     };
 
     std::stringstream ss;
-    for (uint8_t y=0; y < BOARD_SIZE; ++y)
+    for (int8_t y=BOARD_SIZE-1; y >= 0; --y)
     {
-        ss << GREY << BOARD_SIZE - y << ' ';
+        ss << GREY << y+1 << ' ';
         for (uint8_t x=0; x < BOARD_SIZE; ++x)
         {
             const uint8_t bCaseIndex = BoardIndexFromCoordinate(x, y);
             Piece_t bCurrentPiece = m_boardData[bCaseIndex];
 
-            ss << (((x+y) % 2) ? BACKGROUND_DARK : BACKGROUND_LIGHT)
+            ss << RESET << (((x+y) % 2) ? BACKGROUND_DARK : BACKGROUND_LIGHT)
                       << (Piece::CompareColor(bCurrentPiece, Piece::White) ? PIECE_LIGHT : PIECE_DARK)
                       << s_piece_ascii.at(Piece::GetKind(bCurrentPiece))
                       << RESET;
