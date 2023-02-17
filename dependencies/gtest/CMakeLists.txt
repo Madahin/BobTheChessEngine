@@ -1,0 +1,6 @@
+FetchContent_GetProperties(gtest)
+if(NOT gtest_POPULATED)
+    message(STATUS "Fetching gtest ${GTEST_VERSION}")
+    FetchContent_Populate(gtest)
+    add_subdirectory(${gtest_SOURCE_DIR} ${gtest_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()

@@ -1,0 +1,4 @@
+include(${CMAKE_CURRENT_LIST_DIR}/Toolchain-gcc.cmake)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
+set(CMAKE_C_FLAGS ${CMAKE_CXX_FLAGS})
