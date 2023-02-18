@@ -9,6 +9,7 @@
 #include <cassert>
 #include <cstdint>
 #include <map>
+#include <stack>
 #include <string>
 #include <sstream>
 #include <string_view>
@@ -17,6 +18,35 @@
 
 #include "MoveStruct.h"
 #include "Piece.h"
+
+/**
+ * @brief Chessboard representation
+ *
+ * This class implement a chess board with this
+ * coordinate system :
+ *
+ *     a   b   c   d   e   f   g   h
+ *   ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
+ * 8 ┃56 ┃57 ┃58 ┃59 ┃60 ┃61 ┃62 ┃63 ┃ 8
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 7 ┃48 ┃49 ┃50 ┃51 ┃52 ┃53 ┃54 ┃55 ┃ 7
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 6 ┃40 ┃41 ┃42 ┃43 ┃44 ┃45 ┃46 ┃47 ┃ 6
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 5 ┃32 ┃33 ┃34 ┃35 ┃36 ┃37 ┃38 ┃39 ┃ 5
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 4 ┃24 ┃25 ┃26 ┃27 ┃28 ┃29 ┃30 ┃31 ┃ 4
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 3 ┃16 ┃17 ┃18 ┃19 ┃20 ┃21 ┃22 ┃23 ┃ 3
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 2 ┃ 8 ┃ 9 ┃10 ┃11 ┃12 ┃13 ┃14 ┃15 ┃ 2
+ *   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ * 1 ┃ 0 ┃ 1 ┃ 2 ┃ 3 ┃ 4 ┃ 5 ┃ 6 ┃ 7 ┃ 1
+ *   ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛
+ *     a   b   c   d   e   f   g   h
+ *
+ * The white side being the bottom side (rank 1 and 2)
+ */
 
 class Board
 {
@@ -32,6 +62,7 @@ public:
     explicit Board(std::string_view strFenString="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     auto ApplyMove(const Move_t& move) -> void;
+    auto UnmakeMove() -> void;
 
     auto LoadFenString(std::string_view strFenString) -> bool;
 
@@ -58,9 +89,9 @@ public:
     }
 
     [[nodiscard]]
-    inline constexpr auto GetColorToMove() const -> Piece_t
+    constexpr auto GetColorToMove() const -> Piece_t
     {
-        return ((m_whiteToPlay) ? Piece::White : Piece::Black);
+        return (m_whiteToPlay ? Piece::White : Piece::Black);
     }
 
     /**
@@ -83,7 +114,7 @@ public:
      * @param[in] y The line number
      * @return The board coordinate, in [0, 64)
      */
-    static inline constexpr auto BoardIndexFromCoordinate(const uint8_t x, const uint8_t y) -> uint8_t
+    static constexpr auto BoardIndexFromCoordinate(const uint8_t x, const uint8_t y) -> uint8_t
     {
         return x + BOARD_SIZE * y;
     }
@@ -95,7 +126,7 @@ public:
      * @param[out] x A column number
      * @param[out] y A line number
      */
-    static inline constexpr auto CoordinateFromBoardIndex(const uint8_t boardIndex, uint8_t& x, uint8_t& y) -> void
+    static constexpr auto CoordinateFromBoardIndex(const uint8_t boardIndex, uint8_t& x, uint8_t& y) -> void
     {
         y = boardIndex / BOARD_SIZE;
         x = boardIndex % BOARD_SIZE;
@@ -112,7 +143,9 @@ public:
 
     static inline auto BoardIndexToChessNotation(const uint8_t boardIndex) -> std::string
     {
-        uint8_t x{0}, y{0};
+        uint8_t x{0};
+        uint8_t y{0};
+
         CoordinateFromBoardIndex(boardIndex, x, y);
         return CoordinateToChessNotation(x, y);
     }
@@ -126,12 +159,15 @@ public:
     static constexpr uint8_t NUM_CASE   = BOARD_SIZE * BOARD_SIZE;
 
 private:
-    std::array<Piece_t, NUM_CASE> m_boardData;
-    std::vector<Piece_t> m_pieces;
-    bool m_whiteToPlay;
-    RockPossibility m_whiteRockPossibility, m_blackRockPossibility;
-    uint8_t m_enPassantSquare;
-    uint32_t m_halfMoveClock, m_fullMoveNumber;
+    std::array<Piece_t, NUM_CASE> m_boardData{};
+    std::vector<Piece_t> m_pieces{};
+    std::stack<Move_t> m_appliedMoves{};
+    bool m_whiteToPlay{true};
+    RockPossibility m_whiteRockPossibility{true, true};
+    RockPossibility m_blackRockPossibility{true, true};
+    uint8_t m_enPassantSquare{NO_EN_PASSANT_SQUARE};
+    uint32_t m_halfMoveClock{0};
+    uint32_t m_fullMoveNumber{1};
 };
 
 #endif //CHESSENGINE_BOARD_H
