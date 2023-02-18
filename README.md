@@ -92,18 +92,18 @@
 
 Bob is just a simple chess engine with no pretention.
 
-I love chess, but i'm really bad at it, so I tough I could make an engine that would be
+I love chess, but I'm awful at it, so I tough I could make an engine that would be
 as good as I'm meant to be.
 
 
-Bob is meant to be compatible with UCI, so any chess frontend compatible with the protocl should
-be able to use him. I personaly use [KNights](https://apps.kde.org/knights/) to develop him.
+Bob is meant to be compatible with [UCI](https://www.chessprogramming.org/UCI), so any chess frontend compatible with the protocol should
+be able to use him. I personally use [KNights](https://apps.kde.org/knights/) to develop him.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
-The project is being developped on linux. As such, I have no idea if it can be built on Windows or macOS.
+The project is being developed on linux. As such, I have no idea if it can be built on Windows or macOS.
 
 That said, a cmake toolchain is provided for Windows cross-compilation.
 
