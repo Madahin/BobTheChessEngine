@@ -3,6 +3,14 @@
 //
 #include "Move.h"
 
+std::array<std::array<uint8_t, 8>, Board::NUM_CASE> Move::sm_numSquareToEdge{};
+
+auto Move::Init() -> void
+{
+    Log::Info("Initializing the move module");
+    GenerateMoveData();
+}
+
 MoveList_t Move::GenerateMoveFromBoardForDepth(const Board &board, const uint64_t depth)
 {
     MoveList_t moves = std::make_shared<std::vector<Move_t>>();
@@ -87,13 +95,12 @@ auto Move::GenerateSlidingMoves(const Board &board, const Piece_t piece, const u
     MoveList_t moves = std::make_shared<std::vector<Move_t>>();
     const uint8_t firstDirectionIndex = ((Piece::GetKind(piece) == Piece::Bishop) ? 4 : 0);
     const uint8_t lastDirectionIndex = ((Piece::GetKind(piece) == Piece::Rook) ? 4 : 8);
-    const auto&& numSquareToEdge = Move::GenerateMoveData();
     const Piece_t friendlyColor = Piece::GetColor(piece);
     const Piece_t opponentColor = ((friendlyColor == Piece::White) ? Piece::Black : Piece::White);
 
     for (uint8_t directionIndex=firstDirectionIndex; directionIndex < lastDirectionIndex; ++directionIndex)
     {
-        for (uint8_t n=0; n < numSquareToEdge[square][directionIndex]; ++n)
+        for (uint8_t n=0; n < sm_numSquareToEdge[square][directionIndex]; ++n)
         {
             const uint8_t targetSquare = square + Move::sm_directionOffset[directionIndex] * (n+1);
             if (targetSquare >= Board::NUM_CASE)
@@ -260,41 +267,32 @@ auto Move::GenerateKingMoves(const Board &board, const Piece_t piece, const uint
 }
 
 
-constexpr auto Move::GenerateMoveData() -> std::array<std::array<uint8_t, 8>, Board::NUM_CASE>
+auto Move::GenerateMoveData() -> void
 {
-    // Macro wizardry for generating an array as a constexpr
-#define ComputeForXY(x, y)   \
-{                            \
-     y,                      \
-     7 - y,                  \
-     x,                      \
-     7 - x,                  \
-     std::min(y, x),         \
-     std::min(7 - x, 7 - x), \
-     std::min(y, 7 - x),     \
-     std::min(7 - y, x)      \
- }
-#define ComputeForY(y)  \
-    ComputeForXY(0, y),  \
-    ComputeForXY(1, y),  \
-    ComputeForXY(2, y),  \
-    ComputeForXY(3, y),  \
-    ComputeForXY(4, y),  \
-    ComputeForXY(5, y),  \
-    ComputeForXY(6, y),  \
-    ComputeForXY(7, y)  \
+    Log::Debug("Generating static moves data");
+    for (uint8_t y=0; y < Board::BOARD_SIZE; ++y)
+    {
+        for (uint8_t x=0; x < Board::BOARD_SIZE; ++x)
+        {
+            const uint8_t numNorth = y;
+            const uint8_t numSouth = Board::BOARD_SIZE - (y+1);
+            const uint8_t numWest  = x;
+            const uint8_t numEast  = Board::BOARD_SIZE - (x+1);
 
-#define ComputeArray \
-    {{ComputeForY(0),  \
-    ComputeForY(1),  \
-    ComputeForY(2),  \
-    ComputeForY(3),  \
-    ComputeForY(4),  \
-    ComputeForY(5),  \
-    ComputeForY(6),  \
-    ComputeForY(7)}}
+            const uint8_t squareIndex = Board::BoardIndexFromCoordinate(x, y);
 
-    return ComputeArray;
+            sm_numSquareToEdge[squareIndex] = {
+                numNorth,
+                numSouth,
+                numWest,
+                numEast,
+                std::min(numNorth, numWest),
+                std::min(numSouth, numEast),
+                std::min(numNorth, numEast),
+                std::min(numSouth, numWest),
+            };
+        };
+    }
 }
 
 auto Move::MoveToAlgebraicNotation(const Board &board, Move_t move) -> std::string
@@ -310,4 +308,5 @@ auto Move::MoveToAlgebraicNotation(const Board &board, Move_t move) -> std::stri
 
     return ss.str();
 }
+
 

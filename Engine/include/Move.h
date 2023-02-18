@@ -36,13 +36,15 @@ class Move
 public:
     Move() = delete;
 
+    static auto Init() -> void;
+
     static MoveList_t GenerateMoveFromBoardForDepth(const Board& board, uint64_t depth);
     static MoveList_t GenerateMoveFromBoard(const Board& board);
 
     static auto MoveToAlgebraicNotation(const Board &board, Move_t move) -> std::string;
 
 private:
-    static constexpr auto GenerateMoveData() -> std::array<std::array<uint8_t, 8>, Board::NUM_CASE>;
+    static auto GenerateMoveData() -> void;
     static auto GenerateSlidingMoves(const Board &board, Piece_t piece, uint8_t square) -> MoveList_t;
     static auto GenerateKnightMoves(const Board &board, Piece_t piece, uint8_t square) -> MoveList_t;
     static auto GeneratePawnMoves(const Board &board, Piece_t piece, uint8_t square) -> MoveList_t;
@@ -59,6 +61,7 @@ private:
             Direction::NORTH_EAST,
             Direction::SOUTH_WEST,
     };
+    static std::array<std::array<uint8_t, 8>, Board::NUM_CASE> sm_numSquareToEdge;
 
 };
 

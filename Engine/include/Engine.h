@@ -13,6 +13,7 @@
 
 #include "Board.h"
 #include "Logger.h"
+#include "Move.h"
 
 class Engine;
 

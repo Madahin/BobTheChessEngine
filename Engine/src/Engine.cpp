@@ -32,6 +32,9 @@ Engine::Engine(std::istream& inputStream, std::ostream& outputStream) :
 void Engine::Start()
 {
     Log::Info("------------ Engine Start ------------");
+
+    Move::Init();
+
     while(!m_bMustQuit)
     {
         std::string strInput;
