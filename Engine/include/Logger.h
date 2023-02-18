@@ -31,7 +31,7 @@ public:
             // stderr sink
             {
                 auto stderrSink = std::make_shared<spdlog::sinks::stderr_color_sink_mt>();
-                stderrSink->set_level(spdlog::level::trace);
+                stderrSink->set_level(spdlog::level::debug);
                 sinks.push_back(stderrSink);
             }
 
@@ -40,7 +40,7 @@ public:
             try
             {
                 auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("ChessEngine.log");
-                fileSink->set_level(spdlog::level::debug);
+                fileSink->set_level(spdlog::level::trace);
                 sinks.push_back(fileSink);
             }
             catch (const spdlog::spdlog_ex &ex)
@@ -95,6 +95,8 @@ namespace Log
     {
         ::Logger::getInstance()->critical(format, std::forward<Args>(args)...);
     }
+
+    auto SetLevel(spdlog::level::level_enum level) -> void;
 };
 
 #endif //CHESSENGINE_LOGGER_H
