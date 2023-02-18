@@ -1,3 +1,6 @@
+enable_testing()
+include(GoogleTest)
+
 ##############################
 #          Variables         #
 ##############################
@@ -17,7 +20,7 @@ list(REMOVE_ITEM Test_src ${CMAKE_SOURCE_DIR}/Engine/src/main.cpp)
 set (Test_link
     gtest
     gtest_main
-        spdlog::spdlog
+    spdlog::spdlog
 )
 
 ##############################
@@ -44,3 +47,6 @@ target_link_libraries(${PROJECT_NAME}_test
 
 # Replace the project path to '.' when using __FILE__
 target_compile_options(${PROJECT_NAME}_test PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
+
+# Generate CTest targets
+gtest_discover_tests(${PROJECT_NAME}_test)
