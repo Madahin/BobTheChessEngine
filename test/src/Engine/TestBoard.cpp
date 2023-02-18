@@ -9,8 +9,6 @@
 
 TEST(TestBoard, ValidateFenString_valid)
 {
-
-
     static const std::vector<std::string> vecFenStrings = {
             // From https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation#Examples
             "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
@@ -29,7 +27,6 @@ TEST(TestBoard, ValidateFenString_valid)
             "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8",
             "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10",
     };
-
 
     for (const auto& fenString : vecFenStrings)
     {
@@ -51,4 +48,32 @@ TEST(TestBoard, LoadFenString_invalid)
     ASSERT_FALSE(b.LoadFenString("hgyuidfhjsukhjfvilusdhli"));
     ASSERT_FALSE(b.LoadFenString(""));
     ASSERT_FALSE(b.LoadFenString("Vnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+}
+
+TEST(TestBoard, Coordinate_to_Index)
+{
+    uint8_t boardIndex = 0;
+    for (uint8_t y = 0; y < Board::BOARD_SIZE; ++y)
+    {
+        for (uint8_t x = 0; x < Board::BOARD_SIZE; ++x)
+        {
+            ASSERT_EQ(boardIndex++, Board::BoardIndexFromCoordinate(x, y));
+        }
+    }
+}
+
+TEST(TestBoard, Index_to_Coordinate)
+{
+    uint8_t correctBoardIndex = 0;
+    for (uint8_t y = 0; y < Board::BOARD_SIZE; ++y)
+    {
+        for (uint8_t x = 0; x < Board::BOARD_SIZE; ++x)
+        {
+            uint8_t currentX{0}, currentY{0};
+            Board::CoordinateFromBoardIndex(correctBoardIndex++, currentX, currentY);
+
+            ASSERT_EQ(x, currentX);
+            ASSERT_EQ(y, currentY);
+        }
+    }
 }
