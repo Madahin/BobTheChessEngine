@@ -114,10 +114,11 @@ auto Move::GenerateSlidingMoves(const Board &board, const Piece_t piece, const u
                 break;
             }
 
-            moves->push_back({square, targetSquare});
+            moves->push_back({square, targetSquare, MoveType::MOVE});
 
             if (Piece::CompareColor(pieceOnTargetSquare, opponentColor))
             {
+                moves->back().type = MoveType::CAPTURE;
                 break;
             }
         }
@@ -165,10 +166,11 @@ auto Move::GenerateKnightMoves(const Board &board, const Piece_t piece, const ui
             continue;
         }
 
-        moves->push_back({square, targetSquare});
+        moves->push_back({square, targetSquare, MoveType::MOVE});
 
         if (Piece::CompareColor(pieceOnTargetSquare, opponentColor))
         {
+            moves->back().type = MoveType::CAPTURE;
             continue;
         }
     }
@@ -205,7 +207,7 @@ auto Move::GeneratePawnMoves(const Board &board, const Piece_t piece, const uint
             continue;
         }
 
-        moves->push_back({square, targetSquare});
+        moves->push_back({square, targetSquare, MoveType::MOVE});
     }
 
     // TODO: Capture
@@ -251,10 +253,11 @@ auto Move::GenerateKingMoves(const Board &board, const Piece_t piece, const uint
                 continue;
             }
 
-            moves->push_back({square, targetSquare});
+            moves->push_back({square, targetSquare, MoveType::MOVE});
 
             if (Piece::CompareColor(pieceOnTargetSquare, opponentColor))
             {
+                moves->back().type = MoveType::CAPTURE;
                 continue;
             }
         }
